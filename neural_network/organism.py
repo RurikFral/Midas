@@ -78,14 +78,3 @@ class Organism():
         if mutate:
             child.mutate()
         return child
-        if not X.ndim == 2:
-            raise ValueError(f'Input has {X.ndim} dimensions, expected 2')
-        if not X.shape[1] == self.layers[0].shape[0]:
-            raise ValueError(f'Input has {X.shape[1]} features, expected {self.layers[0].shape[0]}')
-        for index, (layer, bias) in enumerate(zip(self.layers, self.biases)):
-            X = X @ layer + np.ones((X.shape[0], 1)) @ bias
-            if index == len(self.layers) - 1:
-                X = self.output(X) # output activation
-            else:
-                X = np.clip(X, 0, np.inf)  # ReLU
-        return X
