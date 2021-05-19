@@ -3,10 +3,18 @@ import numpy as np
 
 class Organism():
     def __init__(self, dimensions, use_bias=True, output='softmax'):
+        # investment components
+        self.profit = 0
+        self.basis = 0
+        self.investedAmount = 0
+        self.balance = 0
+
+        # nural network components
         self.layers = []
         self.biases = []
         self.use_bias = use_bias
         self.output = self._activation(output)
+
         for i in range(len(dimensions)-1):
             shape = (dimensions[i], dimensions[i+1])
             std = np.sqrt(2 / sum(shape))
@@ -23,7 +31,14 @@ class Organism():
         if output == 'linear':
             return lambda X : X
 
+    def deposit_funds(self, amount):
+        if amount < 0:
+            raise ValueError("Organism deposit amount must be positive. If you are wanting to widraw funds then use the withdraw_funds function")
+        else:
+            self.balance += amount
+
     def predict(self, X):
+        print("\nInput for prediction: " + str(X))
         if not X.ndim == 2:
             raise ValueError(f'Input has {X.ndim} dimensions, expected 2')
         if not X.shape[1] == self.layers[0].shape[0]:
@@ -78,3 +93,6 @@ class Organism():
         if mutate:
             child.mutate()
         return child
+
+    def score(self):
+        return self.profit
