@@ -1,6 +1,9 @@
+from kraken_api.kraken_service import KrakenService
 from neural_network.organism import Organism
 from neural_network.ecosystem import Ecosystem
 import numpy as np
+import json
+from helpers.logger import Logger
 
 # The function to create the initial population
 organism_creator = lambda : Organism([1, 16, 16, 16, 1], output='linear')
@@ -28,3 +31,10 @@ for i in range(generations):
     best_organism_scores.append(this_generation_best[1])
 
 print(best_organism_scores)
+
+
+
+
+service = KrakenService()
+resp = service.getTicker()
+print(resp)

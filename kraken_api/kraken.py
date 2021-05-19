@@ -4,7 +4,7 @@ import urllib.parse
 import hashlib
 import hmac
 import base64
-from . import version
+
 
 class KrakenAPI(object):
     """ Maintains a single session between this machine and Kraken.
@@ -30,9 +30,6 @@ class KrakenAPI(object):
         self.uri = 'https://api.kraken.com'
         self.apiversion = '0'
         self.session = requests.Session()
-        self.session.headers.update({
-            'User-Agent': 'krakenex/' + version.__version__ + ' (+' + version.__url__ + ')'
-        })
         self.response = None
         self._json_options = {}
         return
